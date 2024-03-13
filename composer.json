@@ -1,5 +1,5 @@
 {
-    "require": {
-        "stripe/stripe-php": "^13.13"
-    }
+  "require": {
+    "ramsey/uuid": "^4.2"
+  }
 }
