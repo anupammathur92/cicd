@@ -23,12 +23,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-    - name: executing remote ssh commands using ssh key
-      uses: appleboy/ssh-action@v1.0.0
-      with:
-          host: ${{ secrets.INSTANCE_HOSTNAME }} #IP from EC2
-          username: ${{ secrets.INSTANCE_USERNAME }} #ubuntu
-          key: ${{ secrets.INSTANCE_KEY }} #download from EC2
-          port: ${{ secrets.INSTANCE_PORT }} #22
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.INSTANCE_HOSTNAME }}
+          username: ${{ secrets.INSTANCE_USERNAME }}
+          key: ${{ secrets.INSTANCE_KEY }}
+          port: ${{ secrets.INSTANCE_PORT }}
           script: |
-              echo "hello world" > file.txt
+            echo "hello world" > file.txt
