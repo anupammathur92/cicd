@@ -10,7 +10,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    environment: production
+    environment: development
 
     steps:
       - name: Checkout
@@ -42,14 +42,13 @@ jobs:
 
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@v1.0.0
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ github.sha }}
         with:
           host: ${{ secrets.INSTANCE_HOSTNAME }}
           username: ${{ secrets.INSTANCE_USERNAME }}
           key: ${{ secrets.INSTANCE_KEY }}
           port: ${{ secrets.INSTANCE_PORT }}
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
           script: |
             echo "hello world" > file.txt
             aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin $ECR_REGISTRY
