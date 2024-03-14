@@ -53,4 +53,6 @@ jobs:
           envs: ECR_REGISTRY,ECR_REPOSITORY,IMAGE_TAG
           script: |-
             echo "hello world" > file.txt
-            echo $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin $ECR_REGISTRY
+            docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+            docker run -d -p 8080:80 $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
