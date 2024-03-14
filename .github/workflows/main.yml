@@ -42,15 +42,17 @@ jobs:
 
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@v1.0.0
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
         with:
           host: ${{ secrets.INSTANCE_HOSTNAME }}
           username: ${{ secrets.INSTANCE_USERNAME }}
           key: ${{ secrets.INSTANCE_KEY }}
           port: ${{ secrets.INSTANCE_PORT }}
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ github.sha }}
           script: |
             echo "hello world" > file.txt
+            echo $ECR_REGISTRY:$IMAGE_TAG
             aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin $ECR_REGISTRY
             docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
             docker run -d -p 8080:80 $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
