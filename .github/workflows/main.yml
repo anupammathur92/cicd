@@ -50,4 +50,7 @@ jobs:
           username: ${{ secrets.INSTANCE_USERNAME }}
           key: ${{ secrets.INSTANCE_KEY }}
           port: ${{ secrets.INSTANCE_PORT }}
-        run: ./my-script.sh
+          envs: ECR_REGISTRY,ECR_REPOSITORY,IMAGE_TAG
+          script: |-
+            echo "hello world" > file.txt
+            echo $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
