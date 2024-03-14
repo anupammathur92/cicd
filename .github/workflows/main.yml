@@ -50,7 +50,7 @@ jobs:
           username: ${{ secrets.INSTANCE_USERNAME }}
           key: ${{ secrets.INSTANCE_KEY }}
           port: ${{ secrets.INSTANCE_PORT }}
-        script: |
+        run: |
           echo "hello world" > file.txt
           echo $ECR_REGISTRY:$IMAGE_TAG
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin $ECR_REGISTRY
