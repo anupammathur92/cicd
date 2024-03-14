@@ -35,6 +35,7 @@ jobs:
           key: ${{ secrets.INSTANCE_KEY }}
           port: ${{ secrets.INSTANCE_PORT }}
           script: |
-            echo "hello world" > file.txt
+            echo "hello world" > fileone.txt
+            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin 627528354366.dkr.ecr.ap-south-1.amazonaws.com
             docker pull 627528354366.dkr.ecr.ap-south-1.amazonaws.com/myfirstecrrepo:466e8376da9b204c977c4f1f3f54e784ab703220
             docker run -d -p 8080:80 627528354366.dkr.ecr.ap-south-1.amazonaws.com/myfirstecrrepo:466e8376da9b204c977c4f1f3f54e784ab703220
