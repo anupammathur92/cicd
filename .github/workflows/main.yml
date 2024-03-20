@@ -5,6 +5,7 @@ on:
 
 env:
   ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }} # set this to your Amazon ECR repository name
+  DB_CON_STRING: ${{ secrets.DATABASE_CONN_STRING }}
 
 jobs:
   deploy:
@@ -36,7 +37,7 @@ jobs:
           # Build a docker container and
           # push it to ECR so that it can
           # be deployed to ECS.
-          docker build --build-arg DATABASE_URL=postgresql://postgres:fiftyfive123@myrdsdb.c98g6mgcgrso.ap-south-1.rds.amazonaws.com:5432/aws_rds?schema=public -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build --build-arg DATABASE_URL=$DB_CON_STRING -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
