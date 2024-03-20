@@ -2,9 +2,9 @@ import express from "express";
 import { v4 as uuidv4 } from "uuid";
 import dotenv from "dotenv";
 
-dotenv.config();
+import { prisma } from "./db/index.js";
 
-const port = process.env.PORT || 3000;
+dotenv.config();
 
 const app = express();
 
@@ -13,7 +13,9 @@ app.get("/", (req, res) => {
   return;
 });
 
-app.listen(port, () => {
-  console.log(`UUID is ${uuidv4()}`);
-  console.info(`Server is running on port ${port}`);
+app.get("/users", async (req, res) => {
+  const users = await prisma.User.findMany();
+  res.send({ msg: "success", users: users });
 });
+
+export default app;
