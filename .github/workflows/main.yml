@@ -1,4 +1,4 @@
-name: First use of ECR
+name: First use of ECR-EC2-RDS
 
 on:
   workflow_dispatch:
