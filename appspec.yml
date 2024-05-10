@@ -1,6 +1,6 @@
 version: 0.0
 os: linux
 files:
-  - source: /index.php
+  - source: /
     destination: /var/www/html/myapp/
 file_exists_behavior: OVERWRITE
